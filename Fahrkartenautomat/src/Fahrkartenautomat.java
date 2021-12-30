@@ -19,7 +19,7 @@ class Fahrkartenautomat
        eingezahlterGesamtbetrag = 0.0;
        while(eingezahlterGesamtbetrag < zuZahlenderBetrag)
        {
-    	   System.out.println("Noch zu zahlen: " + (zuZahlenderBetrag - eingezahlterGesamtbetrag));
+    	   System.out.printf("Noch zu zahlen: %.2f\n",zuZahlenderBetrag - eingezahlterGesamtbetrag);
     	   System.out.print("Eingabe (mind. 5Ct, höchstens 2 Euro): ");
     	   eingeworfeneMünze = tastatur.nextDouble();
            eingezahlterGesamtbetrag += eingeworfeneMünze;
@@ -45,7 +45,7 @@ class Fahrkartenautomat
        rückgabebetrag = eingezahlterGesamtbetrag - zuZahlenderBetrag;
        if(rückgabebetrag > 0.0)
        {
-    	   System.out.println("Der Rückgabebetrag in Höhe von " + rückgabebetrag + " EURO");
+    	   System.out.printf("Der Rückgabebetrag in Höhe von %.2f EURO \n", rückgabebetrag);
     	   System.out.println("wird in folgenden Münzen ausgezahlt:");
 
            while(rückgabebetrag >= 2.0) // 2 EURO-Münzen
