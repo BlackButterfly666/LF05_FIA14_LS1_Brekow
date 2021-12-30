@@ -10,5 +10,15 @@ public class App {
         
         // Bei println() gegenüber print()gibt es einen Zeilenvorschub. Desweiteren sind Steuerzeichen nutzbar.
 
+        // Aufgabe 2
+        System.out.println("     *\n"
+        + "     ***\n"
+        + "    *****\n"
+        + "   *******\n"
+        + "  *********\n"
+        + " ***********\n"
+        + "*************\n"
+        + "     ***\n"
+        + "     ***");
     }
 }
