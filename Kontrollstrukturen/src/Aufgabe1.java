@@ -31,6 +31,8 @@ public class Aufgabe1 {
         grosserAlsEine(number1, number2, number3);
         // 3. Geben Sie die größte der 3 Zahlen aus. (If-Else mit && / Und)
         findeGroesste(number1, number2, number3);
+
+        tastatur.close();
     }
 
     // Aufgabe 1: Eigene Bedingungen
@@ -94,4 +96,5 @@ public class Aufgabe1 {
             System.out.println("Zahl 3 ist die Groesste Zahl");
         }
     }
+    
 }

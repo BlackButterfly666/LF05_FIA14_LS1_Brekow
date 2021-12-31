@@ -34,5 +34,6 @@ public class Aufgabe2 {
             
         }
 
+        tastatur.close();
     }
 }
