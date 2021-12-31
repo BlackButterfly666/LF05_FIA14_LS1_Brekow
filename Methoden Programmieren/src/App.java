@@ -9,6 +9,12 @@ public class App {
         
         m = berechneMittelwert(x, y);
         System.out.printf("Der Mittelwert von %.2f und %.2f ist %.2f\n", x, y, m);
+
+        // Aufgabe 7
+        double h;
+        double k1 = 0;
+        double k2 = 0;
+        h = Mathe.hypotenuse(k1, k2);
     }
 
     // Methode von Aufgabe 1
