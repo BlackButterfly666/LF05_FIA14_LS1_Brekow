@@ -7,7 +7,7 @@ class Fahrkartenautomat
        Scanner tastatur = new Scanner(System.in);
       
        double zuZahlenderBetrag; 
-       int anzahlTickets; 
+       byte anzahlTickets; 
        double eingezahlterGesamtbetrag;
        double eingeworfeneMünze;
        double rückgabebetrag;
@@ -15,7 +15,7 @@ class Fahrkartenautomat
        System.out.print("Zu zahlender Betrag (EURO): ");
        zuZahlenderBetrag = tastatur.nextDouble();
        System.out.print("Wieviele Tickets werden benötigt? ");
-       anzahlTickets = tastatur.nextInt();
+       anzahlTickets = tastatur.nextByte();
 
        // Berechnung Gesamtpreis der Tickets
        // -----------
@@ -119,4 +119,18 @@ class Fahrkartenautomat
     Aufgabe 4: Anschließend testen Sie das Programm und - wenn alle Fehler korrigiert sind - übertragen Sie die aktuelle Version in Ihr Repository (Git: push).
         commit, da push keinen Sinn macht, wenn noch 2 Aufgaben bearbeitet werden
     
+    Aufgabe 5: Begründen Sie Ihre Entscheidung für die Wahl des Datentyps.
+        Ein Ticket gibt es nur im Ganzen und nicht zum Teil. 
+        double benötigt 8 byte Speicher, byte nur 1. 
+        byte geht bis 127. So viele Tickets wird reell niemand kaufen, und falls doch, finde ich es völlig in Ordnung, wenn der jenige erneut den Kauf tätigt
+    
+    Aufgabe 6: Erläutern Sie detailliert, was bei der Berechnung des Ausdrucks anzahl * einzelpreis passiert.
+        Die 'anzahlTickets' wird in ein double umgewandelt und dann mit 'zuZahlenderBetrag' multipliziert
+        Beim Multiplizieren von Dualzahlen muss man folgende Multiplikationsregeln beachten:
+            0 · 0 = 0
+            0 · 1 = 0
+            1 · 0 = 0
+            1 · 1 = 1
+        Gebrochene Dualzahlen lassen sich ebenso mit diesem Verfahren multiplizieren. 
+        Bei gebrochenen Dualzahlen muss man beachten, dass man das Komma richtig setzt.
 */
