@@ -47,15 +47,20 @@ class Fahrkartenautomat {
         System.out.println("\nFahrschein wird ausgegeben");
         for (int i = 0; i < 8; i++) {
             System.out.print("=");
-            try {
-                Thread.sleep(250);
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            warte(250);
         }
         System.out.println("\n\n");
     }
+
+    static void warte(int millisekunde) 
+    {
+        try {
+            Thread.sleep(250);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+     }
 
     static void rueckgeldAusgeben(double eingezahlterGesamtbetrag, double zuZahlenderBetrag) {
         double rückgabebetrag;
@@ -66,42 +71,51 @@ class Fahrkartenautomat {
             System.out.printf("Der Rückgabebetrag in Höhe von %.2f EURO \n", rückgabebetrag);
             System.out.println("wird in folgenden Münzen ausgezahlt:");
 
-            while (rückgabebetrag >= 2.0) // 2 EURO-Münzen
-            {
-                System.out.println("2 EURO");
-                rückgabebetrag -= 2.0;
-            }
-            while (rückgabebetrag >= 1.0) // 1 EURO-Münzen
-            {
-                System.out.println("1 EURO");
-                rückgabebetrag -= 1.0;
-            }
-            while (rückgabebetrag >= 0.5) // 50 CENT-Münzen
-            {
-                System.out.println("50 CENT");
-                rückgabebetrag -= 0.5;
-            }
-            while (rückgabebetrag >= 0.2) // 20 CENT-Münzen
-            {
-                System.out.println("20 CENT");
-                rückgabebetrag -= 0.2;
-            }
-            while (rückgabebetrag >= 0.1) // 10 CENT-Münzen
-            {
-                System.out.println("10 CENT");
-                rückgabebetrag -= 0.1;
-            }
-            while (rückgabebetrag >= 0.05)// 5 CENT-Münzen
-            {
-                System.out.println("5 CENT");
-                rückgabebetrag -= 0.05;
-            }
+            muenzeAusgeben(rückgabebetrag, "EURO");
         }
 
         System.out.println("\nVergessen Sie nicht, den Fahrschein\n" +
                 "vor Fahrtantritt entwerten zu lassen!\n" +
                 "Wir wünschen Ihnen eine gute Fahrt.");
+    }
 
+    static void muenzeAusgeben(double betrag, String einheit) 
+    // beim Betrag macht eine int gar keinen Sinn, man könnte die double vorher *100 rechnen, dann in eine int casten per '(int)rückgabebetrag'
+    // und in der Methode wieder durch 100 teilen, aber das gibt fehlerhafte Abweichungen, die nicht notwendig sind
+    {
+        double rückgabebetrag = betrag;
+        while (rückgabebetrag >= 2.0) // 2 EURO-Münzen
+        {
+            System.out.println("2 " + einheit);
+            rückgabebetrag -= 2.0;
+        }
+        while (rückgabebetrag >= 1.0) // 1 EURO-Münzen
+        {
+            System.out.println("1 " + einheit);
+            rückgabebetrag -= 1.0;
+        }
+        while (rückgabebetrag >= 0.5) // 50 CENT-Münzen
+        {
+            System.out.println("0,50 " + einheit);
+            rückgabebetrag -= 0.5;
+        }
+        while (rückgabebetrag >= 0.2) // 20 CENT-Münzen
+        {
+            System.out.println("0,20 " + einheit);
+            rückgabebetrag -= 0.2;
+        }
+        while (rückgabebetrag >= 0.1) // 10 CENT-Münzen
+        {
+            System.out.println("0,10 " + einheit);
+            rückgabebetrag -= 0.1;
+        }
+        rückgabebetrag = Math.round(rückgabebetrag * 100.0) / 100.0;
+
+        while (rückgabebetrag >= 0.05)// 5 CENT-Münzen
+        {
+            System.out.println("0,05 " + einheit);
+            rückgabebetrag -= 0.05;
+        }
     }
 }
 
