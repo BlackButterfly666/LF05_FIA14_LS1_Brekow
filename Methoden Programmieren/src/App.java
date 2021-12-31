@@ -17,6 +17,7 @@ public class App {
         return (x + y) / 2.0; 
     }
 
-    // Methode von Aufgabe 3
+    // Methode von Aufgabe 3 und 4
     private static double reihenschaltung(double r1, double r2) { return r1 + r2;}
+    private static double parallelschaltung(double r1, double r2) { return (r1 * r2)/(r1 + r2);}
 }
