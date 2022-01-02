@@ -9,38 +9,35 @@ public class Aufgabe1 {
         boolean korrekteEingabe = false;
 
         while (!korrekteEingabe) {
-            if (note > 0 && note <= 6) {
-                switch (note) {
-                    case 1:
-                        System.out.println("Sehr gut");
-                        korrekteEingabe = !korrekteEingabe;
-                        break;
-                    case 2:
-                        System.out.println("Gut");
-                        korrekteEingabe = !korrekteEingabe;
-                        break;
-                    case 3:
-                        System.out.println("Befriedigend");
-                        korrekteEingabe = !korrekteEingabe;
-                        break;
-                    case 4:
-                        System.out.println("Ausreichend");
-                        korrekteEingabe = !korrekteEingabe;
-                        break;
-                    case 5:
-                        System.out.println("Mangelhaft");
-                        korrekteEingabe = !korrekteEingabe;
-                        break;
-                    case 6:
-                        System.out.println("Ungenügend");
-                        korrekteEingabe = !korrekteEingabe;
-                        break;
-                    default:
-                        break;
-                }
-            } else {
-                System.out.println("Falsche Eingabe. Bitte gib eine Zahl zwischen 1 und 6 ein.");
-                note = tastatur.nextInt();
+            switch (note) {
+                case 1:
+                    System.out.println("Sehr gut");
+                    korrekteEingabe = !korrekteEingabe;
+                    break;
+                case 2:
+                    System.out.println("Gut");
+                    korrekteEingabe = !korrekteEingabe;
+                    break;
+                case 3:
+                    System.out.println("Befriedigend");
+                    korrekteEingabe = !korrekteEingabe;
+                    break;
+                case 4:
+                    System.out.println("Ausreichend");
+                    korrekteEingabe = !korrekteEingabe;
+                    break;
+                case 5:
+                    System.out.println("Mangelhaft");
+                    korrekteEingabe = !korrekteEingabe;
+                    break;
+                case 6:
+                    System.out.println("Ungenügend");
+                    korrekteEingabe = !korrekteEingabe;
+                    break;
+                default:
+                    System.out.println("Falsche Eingabe. Bitte gib eine Zahl zwischen 1 und 6 ein.");
+                    note = tastatur.nextInt();
+                    break;
             }
             tastatur.close();
         }
