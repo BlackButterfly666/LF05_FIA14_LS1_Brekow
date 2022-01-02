@@ -19,6 +19,7 @@ public class Aufgabe6 {
             x = 2 * x + 4;
             System.out.printf("x = %.2f, linear", x);
         }
+        tastatur.close();
     }
 }
 

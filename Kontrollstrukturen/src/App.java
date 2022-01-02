@@ -6,6 +6,8 @@ public class App {
         // Aufgabe3.aufgabe3();
         // Aufgabe4.aufgabe4();
         // Aufgabe5.aufgabe5();
-        Aufgabe6.aufgabe6();
+        // Aufgabe6.aufgabe6();
+        // Aufgabe7.aufgabe7(); // unfertig
+        Aufgabe8.aufgabe8();
     }
 }
