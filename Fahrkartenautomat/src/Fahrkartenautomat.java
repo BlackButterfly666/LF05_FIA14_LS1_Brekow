@@ -5,7 +5,7 @@ class Fahrkartenautomat {
         double offenerBetrag = fahrkartenbestellungErfassen(); // return offener Betrag
         double gezahlterBetrag = fahrkartenBezahlen(offenerBetrag); // return eingezahltes Geld
         fahrkartenAusgeben(); // print ticket
-        rueckgeldAusgeben(gezahlterBetrag, offenerBetrag); //print rückgeld
+        rueckgeldAusgeben(gezahlterBetrag, offenerBetrag); // print rückgeld
     }
 
     static double fahrkartenbestellungErfassen() {
@@ -14,14 +14,38 @@ class Fahrkartenautomat {
         double zuZahlenderBetrag;
         byte anzahlTickets;
 
-        System.out.print("Zu zahlender Betrag (EURO): ");
-        zuZahlenderBetrag = tastatur.nextDouble();
-        System.out.print("Wieviele Tickets werden benötigt? ");
-        anzahlTickets = tastatur.nextByte();
+        anzahlTickets = gibTicket(tastatur);
+        zuZahlenderBetrag = zuZahlen(tastatur, anzahlTickets);
 
+        return zuZahlenderBetrag;
+    }
+
+    static byte gibTicket(Scanner tastatur) {
+        System.out.print("Wieviele Tickets werden benötigt? min. 1 - max. 10");
+        byte anzahlTickets = tastatur.nextByte();
+        if (anzahlTickets >= 1 && anzahlTickets <= 10) {
+            return anzahlTickets;
+        } else {
+            System.out.println("Der Eingabewert lag nicht zwischen 1 und 10. Als Ticketanzahl wurde 1 ausgewählt. ");
+            return 1;
+        }
+    }
+
+    static double zuZahlen(Scanner tastatur, int anzahlTickets) {
+        System.out.print("Zu zahlender Betrag (EURO): ");
+        double zuZahlenderBetrag = tastatur.nextDouble();
+        boolean korrekteEingabe = false;
+
+        while (!korrekteEingabe) {
+            if (zuZahlenderBetrag < 0) {
+                System.out.print("Zu kleiner Betrag. Zu zahlender Betrag (EURO): ");
+                zuZahlenderBetrag = tastatur.nextDouble();
+            } else {
+                korrekteEingabe = !korrekteEingabe;
+            }
+        }
         // Berechnung Gesamtpreis der Tickets -----------------------
         zuZahlenderBetrag *= anzahlTickets;
-
         return zuZahlenderBetrag;
     }
 
@@ -52,15 +76,14 @@ class Fahrkartenautomat {
         System.out.println("\n\n");
     }
 
-    static void warte(int millisekunde) 
-    {
+    static void warte(int millisekunde) {
         try {
             Thread.sleep(250);
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-     }
+    }
 
     static void rueckgeldAusgeben(double eingezahlterGesamtbetrag, double zuZahlenderBetrag) {
         double rückgabebetrag;
@@ -79,9 +102,11 @@ class Fahrkartenautomat {
                 "Wir wünschen Ihnen eine gute Fahrt.");
     }
 
-    static void muenzeAusgeben(double betrag, String einheit) 
-    // beim Betrag macht eine int gar keinen Sinn, man könnte die double vorher *100 rechnen, dann in eine int casten per '(int)rückgabebetrag'
-    // und in der Methode wieder durch 100 teilen, aber das gibt fehlerhafte Abweichungen, die nicht notwendig sind
+    static void muenzeAusgeben(double betrag, String einheit)
+    // beim Betrag macht eine int gar keinen Sinn, man könnte die double vorher *100
+    // rechnen, dann in eine int casten per '(int)rückgabebetrag'
+    // und in der Methode wieder durch 100 teilen, aber das gibt fehlerhafte
+    // Abweichungen, die nicht notwendig sind
     {
         double rückgabebetrag = betrag;
         while (rückgabebetrag >= 2.0) // 2 EURO-Münzen
