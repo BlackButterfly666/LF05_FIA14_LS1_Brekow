@@ -4,6 +4,7 @@ public class App {
         // Aufgabe2.aufgabe2();
         // Aufgabe3.aufgabe3(); // man nennt es auch 'Rom'
         // Aufgabe4.aufgabe4(); 
-        Aufgabe5.aufgabe5(); 
+        // Aufgabe5.aufgabe5(); 
+        Aufgabe6.aufgabe6(); // man nennt es auch 'Rom'
     }
 }
