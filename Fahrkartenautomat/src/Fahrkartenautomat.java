@@ -13,70 +13,78 @@ class Fahrkartenautomat {
     }
 
     static double fahrkartenbestellungErfassen(Scanner tastatur) {
-        int anzahlTickets;
-        double zuZahlenderBetrag;
-        boolean korrekteEingabe = false;
+        double gesamtPreis = 0;
+        boolean genug = false;
 
-        // Auswahl Ticketart -> return Ticketpreis/Stück ------------
-        double ticketPreis = ticketWaehlen(tastatur);
+        while (!genug) {
+            boolean korrekteEingabe = false;
+            System.out.println(" ");
+            System.out.println("Fahrkartenbestellvorgang:");
+            System.out.println("=========================");
+            System.out.println("Wählen Sie ihre Wunschfahrkarte für Berlin AB aus:");
+            System.out.println("Einzelfahrschein Regeltarif AB = 2,90 EUR drücken Sie [ 1 ]");
+            System.out.println("Tageskarte Regeltarif AB = 8,60 EUR drücken Sie [ 2 ]");
+            System.out.println("Kleingruppen-Tageskarte Regeltarif AB = 23,50 EUR drücken Sie [ 3 ]");
+            System.out.println("Bezahlen [ 9 ]");
+
+            byte ticket = tastatur.nextByte();
+
+            while (!korrekteEingabe) {
+                switch (ticket) {
+                    case 1:
+                        gesamtPreis = kalkulierePreis(tastatur, ticket, 2.90, gesamtPreis);
+                        korrekteEingabe = !korrekteEingabe;
+                        break;
+                    case 2:
+                        gesamtPreis = kalkulierePreis(tastatur, ticket, 8.60, gesamtPreis);
+                        korrekteEingabe = !korrekteEingabe;
+                        break;
+                    case 3:
+                        gesamtPreis = kalkulierePreis(tastatur, ticket, 23.50, gesamtPreis);
+                        korrekteEingabe = !korrekteEingabe;
+                        break;
+                    case 9:
+                        genug = !genug;
+                        korrekteEingabe = !korrekteEingabe;
+                        System.out.println(gesamtPreis);
+                        break;
+                    default:
+                        System.out.println("Ihre Wahl: " + ticket);
+                        System.out.print(" >>falsche Eingabe<<");
+                        ticket = tastatur.nextByte();
+                        break;
+                }
+            }
+        }
+
+        return gesamtPreis;
+    }
+
+    static double kalkulierePreis(Scanner tastatur, byte ticket, double ticketPreis, double gesamtPreis) {
+        System.out.println("Ihre Wahl: " + ticket);
+        byte anzahlTickets = ticketAnzahl(tastatur);
+        double zuZahlenderBetrag = anzahlTickets * ticketPreis;
+        gesamtPreis += zuZahlenderBetrag;
+        System.out.println("Zwischenpreis: " + gesamtPreis);
+        return gesamtPreis;
+    }
+
+    static byte ticketAnzahl(Scanner tastatur) {
+        boolean korrekt = false;
 
         // Auswahl Ticketanzahl ------------------------------------
         System.out.println("Wieviele Tickets werden benötigt? min. 1 - max. 10");
-        anzahlTickets = tastatur.nextByte();
+        byte anzahlTickets = tastatur.nextByte();
 
-        while (!korrekteEingabe) {
+        while (!korrekt) {
             if (anzahlTickets >= 1 && anzahlTickets <= 10) {
-                korrekteEingabe = !korrekteEingabe;
+                korrekt = !korrekt;
             } else {
                 System.out.println("Wählen Sie bitte eine Anzahl von 1 bis 10 Tickets aus.");
                 anzahlTickets = tastatur.nextByte();
             }
         }
-
-        // Berechnung Gesamtpreis der Tickets -----------------------
-        zuZahlenderBetrag = anzahlTickets * ticketPreis;
-
-        return zuZahlenderBetrag;
-    }
-
-    static double ticketWaehlen(Scanner tastatur) {
-        System.out.println(" ");
-        System.out.println("Fahrkartenbestellvorgang:");
-        System.out.println("=========================");
-        System.out.println("Wählen Sie ihre Wunschfahrkarte für Berlin AB aus:");
-        System.out.println("Einzelfahrschein Regeltarif AB = 2,90 EUR drücken Sie [ 1 ]");
-        System.out.println("Tageskarte Regeltarif AB = 8,60 EUR drücken Sie [ 2 ]");
-        System.out.println("Kleingruppen-Tageskarte Regeltarif AB = 23,50 EUR drücken Sie [ 3 ]");
-
-        byte ticket = tastatur.nextByte();
-        double ticketPreis = 0;
-        boolean korrekteEingabe = false;
-
-        while (!korrekteEingabe) {
-            switch (ticket) {
-                case 1:
-                    System.out.println("Ihre Wahl: " + ticket);
-                    korrekteEingabe = !korrekteEingabe;
-                    ticketPreis = 2.90;
-                    break;
-                case 2:
-                    System.out.println("Ihre Wahl: " + ticket);
-                    korrekteEingabe = !korrekteEingabe;
-                    ticketPreis = 8.60;
-                    break;
-                case 3:
-                    System.out.println("Ihre Wahl: " + ticket);
-                    korrekteEingabe = !korrekteEingabe;
-                    ticketPreis = 23.50;
-                    break;
-                default:
-                    System.out.println("Ihre Wahl: " + ticket);
-                    System.out.print(" >>falsche Eingabe<<");
-                    ticket = tastatur.nextByte();
-                    break;
-            }
-        }
-        return ticketPreis;
+        return anzahlTickets;
     }
 
     static double fahrkartenBezahlen(Scanner tastatur, double zuZahlenderBetrag) {
