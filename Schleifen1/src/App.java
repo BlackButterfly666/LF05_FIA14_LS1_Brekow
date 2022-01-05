@@ -4,6 +4,7 @@ public class App {
         // Aufgabe2.aufgabe2();
         // Aufgabe3.aufgabe3();
         // Aufgabe4.aufgabe4();
-        Aufgabe5.aufgabe5();
+        // Aufgabe5.aufgabe5();
+        Aufgabe6.aufgabe6();
     }
 }
