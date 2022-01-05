@@ -3,7 +3,7 @@
 class Fahrkartenautomat {
     public static void main(String[] args) {
         Scanner tastatur = new Scanner(System.in);
-        
+
         while (true) {
             double offenerBetrag = fahrkartenbestellungErfassen(tastatur); // return offener Betrag
             double gezahlterBetrag = fahrkartenBezahlen(tastatur, offenerBetrag); // return eingezahltes Geld
@@ -15,17 +15,22 @@ class Fahrkartenautomat {
     static double fahrkartenbestellungErfassen(Scanner tastatur) {
         int anzahlTickets;
         double zuZahlenderBetrag;
+        boolean korrekteEingabe = false;
 
         // Auswahl Ticketart -> return Ticketpreis/Stück ------------
         double ticketPreis = ticketWaehlen(tastatur);
 
         // Auswahl Ticketanzahl ------------------------------------
-        System.out.print("Wieviele Tickets werden benötigt? min. 1 - max. 10");
+        System.out.println("Wieviele Tickets werden benötigt? min. 1 - max. 10");
         anzahlTickets = tastatur.nextByte();
-        if (anzahlTickets >= 1 && anzahlTickets <= 10) {
-        } else {
-            System.out.println("Der Eingabewert lag nicht zwischen 1 und 10. Als Ticketanzahl wurde 1 ausgewählt. ");
-            anzahlTickets = 1;
+
+        while (!korrekteEingabe) {
+            if (anzahlTickets >= 1 && anzahlTickets <= 10) {
+                korrekteEingabe = !korrekteEingabe;
+            } else {
+                System.out.println("Wählen Sie bitte eine Anzahl von 1 bis 10 Tickets aus.");
+                anzahlTickets = tastatur.nextByte();
+            }
         }
 
         // Berechnung Gesamtpreis der Tickets -----------------------
