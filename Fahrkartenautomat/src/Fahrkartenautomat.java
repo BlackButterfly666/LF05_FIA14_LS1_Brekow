@@ -2,56 +2,79 @@
 
 class Fahrkartenautomat {
     public static void main(String[] args) {
-        double offenerBetrag = fahrkartenbestellungErfassen(); // return offener Betrag
-        double gezahlterBetrag = fahrkartenBezahlen(offenerBetrag); // return eingezahltes Geld
-        fahrkartenAusgeben(); // print ticket
-        rueckgeldAusgeben(gezahlterBetrag, offenerBetrag); // print rückgeld
+        Scanner tastatur = new Scanner(System.in);
+        
+        while (true) {
+            double offenerBetrag = fahrkartenbestellungErfassen(tastatur); // return offener Betrag
+            double gezahlterBetrag = fahrkartenBezahlen(tastatur, offenerBetrag); // return eingezahltes Geld
+            fahrkartenAusgeben(); // print ticket
+            rueckgeldAusgeben(gezahlterBetrag, offenerBetrag); // print rückgeld
+        }
     }
 
-    static double fahrkartenbestellungErfassen() {
-        Scanner tastatur = new Scanner(System.in);
-
+    static double fahrkartenbestellungErfassen(Scanner tastatur) {
+        int anzahlTickets;
         double zuZahlenderBetrag;
-        byte anzahlTickets;
 
-        anzahlTickets = gibTicket(tastatur);
-        zuZahlenderBetrag = zuZahlen(tastatur, anzahlTickets);
+        // Auswahl Ticketart -> return Ticketpreis/Stück ------------
+        double ticketPreis = ticketWaehlen(tastatur);
+
+        // Auswahl Ticketanzahl ------------------------------------
+        System.out.print("Wieviele Tickets werden benötigt? min. 1 - max. 10");
+        anzahlTickets = tastatur.nextByte();
+        if (anzahlTickets >= 1 && anzahlTickets <= 10) {
+        } else {
+            System.out.println("Der Eingabewert lag nicht zwischen 1 und 10. Als Ticketanzahl wurde 1 ausgewählt. ");
+            anzahlTickets = 1;
+        }
+
+        // Berechnung Gesamtpreis der Tickets -----------------------
+        zuZahlenderBetrag = anzahlTickets * ticketPreis;
 
         return zuZahlenderBetrag;
     }
 
-    static byte gibTicket(Scanner tastatur) {
-        System.out.print("Wieviele Tickets werden benötigt? min. 1 - max. 10");
-        byte anzahlTickets = tastatur.nextByte();
-        if (anzahlTickets >= 1 && anzahlTickets <= 10) {
-            return anzahlTickets;
-        } else {
-            System.out.println("Der Eingabewert lag nicht zwischen 1 und 10. Als Ticketanzahl wurde 1 ausgewählt. ");
-            return 1;
-        }
-    }
+    static double ticketWaehlen(Scanner tastatur) {
+        System.out.println(" ");
+        System.out.println("Fahrkartenbestellvorgang:");
+        System.out.println("=========================");
+        System.out.println("Wählen Sie ihre Wunschfahrkarte für Berlin AB aus:");
+        System.out.println("Einzelfahrschein Regeltarif AB = 2,90 EUR drücken Sie [ 1 ]");
+        System.out.println("Tageskarte Regeltarif AB = 8,60 EUR drücken Sie [ 2 ]");
+        System.out.println("Kleingruppen-Tageskarte Regeltarif AB = 23,50 EUR drücken Sie [ 3 ]");
 
-    static double zuZahlen(Scanner tastatur, int anzahlTickets) {
-        System.out.print("Zu zahlender Betrag (EURO): ");
-        double zuZahlenderBetrag = tastatur.nextDouble();
+        byte ticket = tastatur.nextByte();
+        double ticketPreis = 0;
         boolean korrekteEingabe = false;
 
         while (!korrekteEingabe) {
-            if (zuZahlenderBetrag < 0) {
-                System.out.print("Zu kleiner Betrag. Zu zahlender Betrag (EURO): ");
-                zuZahlenderBetrag = tastatur.nextDouble();
-            } else {
-                korrekteEingabe = !korrekteEingabe;
+            switch (ticket) {
+                case 1:
+                    System.out.println("Ihre Wahl: " + ticket);
+                    korrekteEingabe = !korrekteEingabe;
+                    ticketPreis = 2.90;
+                    break;
+                case 2:
+                    System.out.println("Ihre Wahl: " + ticket);
+                    korrekteEingabe = !korrekteEingabe;
+                    ticketPreis = 8.60;
+                    break;
+                case 3:
+                    System.out.println("Ihre Wahl: " + ticket);
+                    korrekteEingabe = !korrekteEingabe;
+                    ticketPreis = 23.50;
+                    break;
+                default:
+                    System.out.println("Ihre Wahl: " + ticket);
+                    System.out.print(" >>falsche Eingabe<<");
+                    ticket = tastatur.nextByte();
+                    break;
             }
         }
-        // Berechnung Gesamtpreis der Tickets -----------------------
-        zuZahlenderBetrag *= anzahlTickets;
-        return zuZahlenderBetrag;
+        return ticketPreis;
     }
 
-    static double fahrkartenBezahlen(double zuZahlenderBetrag) {
-        Scanner tastatur = new Scanner(System.in);
-
+    static double fahrkartenBezahlen(Scanner tastatur, double zuZahlenderBetrag) {
         double eingezahlterGesamtbetrag;
         double eingeworfeneMünze;
 
