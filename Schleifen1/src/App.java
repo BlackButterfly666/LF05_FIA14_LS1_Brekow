@@ -6,6 +6,7 @@ public class App {
         // Aufgabe4.aufgabe4();
         // Aufgabe5.aufgabe5();
         // Aufgabe6.aufgabe6();
-        Aufgabe7.aufgabe7();
+        // Aufgabe7.aufgabe7();
+        Aufgabe8.aufgabe8();
     }
 }
