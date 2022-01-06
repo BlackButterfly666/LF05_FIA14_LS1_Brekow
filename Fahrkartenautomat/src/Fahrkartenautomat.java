@@ -3,51 +3,31 @@
 class Fahrkartenautomat {
     public static void main(String[] args) {
         Scanner tastatur = new Scanner(System.in);
+        byte ticketGesamtAnzahl = Fahrschein.ticketGesamtAnzahl;
+        Fahrschein[] fahrscheine = new Fahrschein[ticketGesamtAnzahl];
+        // erstelle Fahrscheine
+        for (int i = 0; i < ticketGesamtAnzahl; i++) {
+            Fahrschein fs = new Fahrschein(Fahrschein.fahrkartenBezeichnungAusgeben(i),
+                    Fahrschein.fahrkartenPreiseAusgeben(i));
+            fahrscheine[i] = fs;
+        }
 
         while (true) {
-            double offenerBetrag = fahrkartenbestellungErfassen(tastatur); // return offener Betrag
-            double gezahlterBetrag = fahrkartenBezahlen(tastatur, offenerBetrag); // return eingezahltes Geld
-            fahrkartenAusgeben(); // print ticket
-            rueckgeldAusgeben(gezahlterBetrag, offenerBetrag); // print rückgeld
+        // return offener Betrag
+        double offenerBetrag = fahrkartenbestellungErfassen(tastatur,
+        ticketGesamtAnzahl, fahrscheine);
+        // return eingezahltes Geld
+        double gezahlterBetrag = fahrkartenBezahlen(tastatur, offenerBetrag);
+        // print ticket
+        fahrkartenAusgeben();
+        // print rückgeld
+        rueckgeldAusgeben(gezahlterBetrag, offenerBetrag);
         }
     }
 
-    // #region Ticketarrays für Bezeichnung und Preis
-    // auf korrekte Reihenfolge achten
-    static String fahrkartenBezeichnungAusgeben(int index) {
-        String[] fahrkartenbezeichnung = { "Einzelfahrschein Berlin AB",
-                "Einzelfahrschein Berlin BC",
-                "Einzelfahrschein Berlin ABC",
-                "Kurzstrecke",
-                "Tageskarte Berlin AB",
-                "Tageskarte Berlin BC",
-                "Tageskarte Berlin ABC",
-                "Kleingruppen-Tageskarte Berlin AB",
-                "Kleingruppen-Tageskarte Berlin BC",
-                "Kleingruppen-Tageskarte Berlin ABC" };
-        return fahrkartenbezeichnung[index];
-    }
-
-    static double fahrkartenPreiseAusgeben(int index) {
-        double[] fahrkartenpreise = { 2.90, 3.30, 3.60, 1.90, 8.60, 9.00, 9.60, 23.50, 24.30, 24.90 };
-        return fahrkartenpreise[index];
-    }
-    // #endregion
-
-    static void printFahrkartenOptionen(byte ticketGesamtAnzahl) {
-        for (int i = 0; i < ticketGesamtAnzahl; i++) {
-            System.out.printf(fahrkartenBezeichnungAusgeben(i) + " = %.2f Euro drücken Sie [ " + i + " ]\n",
-                    fahrkartenPreiseAusgeben(i));
-        }
-    }
-
-    static double fahrkartenbestellungErfassen(Scanner tastatur) {
+    static double fahrkartenbestellungErfassen(Scanner tastatur, byte ticketGesamtAnzahl, Fahrschein[] fahrscheine) {
         double gesamtPreis = 0;
         boolean genug = false;
-
-        // --------------- bei mehr oder weniger verschiedenen Tickets hier Anzahl
-        // anpassen
-        byte ticketGesamtAnzahl = 10;
 
         while (!genug) {
             boolean korrekteEingabe = false;
@@ -55,17 +35,21 @@ class Fahrkartenautomat {
             System.out.println("Fahrkartenbestellvorgang:");
             System.out.println("=========================");
             System.out.println("Wählen Sie ihre Wunschfahrkarte für Berlin AB aus:");
-            printFahrkartenOptionen(ticketGesamtAnzahl);
-            System.out.println("Bezahlen [ 10 ]");
+            // printFahrkartenOptionen(ticketGesamtAnzahl);
+            for (int i = 0; i < ticketGesamtAnzahl; i++) {
+                System.out.printf(fahrscheine[i].bezeichnung + " = %.2f Euro drücken Sie [ " + i + " ]\n",
+                        fahrscheine[i].preis);
+            }
+            System.out.println("Bezahlen [ " + ticketGesamtAnzahl + " ]");
 
             byte ticket = tastatur.nextByte();
 
             while (!korrekteEingabe) {
                 if (ticket >= 0 && ticket <= 9) {
                     System.out.println("Ihre Wahl: " + ticket);
-                    gesamtPreis = kalkulierePreis(tastatur, fahrkartenPreiseAusgeben(ticket), gesamtPreis);
+                    gesamtPreis = kalkulierePreis(tastatur, fahrscheine[ticket].preis, gesamtPreis);
                     korrekteEingabe = !korrekteEingabe;
-                } else if (ticket == 10) {
+                } else if (ticket == ticketGesamtAnzahl) {
                     genug = !genug;
                     korrekteEingabe = !korrekteEingabe;
                     System.out.printf("Gesamtpreis: %.2f EURO \n", gesamtPreis);
@@ -108,14 +92,26 @@ class Fahrkartenautomat {
 
     static double fahrkartenBezahlen(Scanner tastatur, double zuZahlenderBetrag) {
         double eingezahlterGesamtbetrag;
-        double eingeworfeneMünze;
+        double eingeworfeneMünze = 0;
 
         // Geldeinwurf ----------------------------------------------
         eingezahlterGesamtbetrag = 0.0;
         while (eingezahlterGesamtbetrag < zuZahlenderBetrag) {
+            boolean korrekteEingabe = false;
             System.out.printf("Noch zu zahlen: %.2f EURO\n", zuZahlenderBetrag - eingezahlterGesamtbetrag);
             System.out.print("Eingabe (mind. 5Ct, höchstens 2 Euro): ");
             eingeworfeneMünze = tastatur.nextDouble();
+            while (!korrekteEingabe) {
+                if (eingeworfeneMünze == 0.05 || eingeworfeneMünze == 0.1 || eingeworfeneMünze == 0.2
+                        || eingeworfeneMünze == 0.5 ||
+                        eingeworfeneMünze == 1 || eingeworfeneMünze == 2) {
+                    korrekteEingabe = !korrekteEingabe;
+                } else {
+                    System.out.println("Eingabe inkorrekt.");
+                    System.out.print("Eingabe (0,05 / 0,10 / 0,20 / 0,50 / 1 / 2): ");
+                    eingeworfeneMünze = tastatur.nextDouble();
+                }
+            }
             eingezahlterGesamtbetrag += eingeworfeneMünze;
         }
         return eingezahlterGesamtbetrag;
@@ -150,6 +146,7 @@ class Fahrkartenautomat {
             System.out.println("wird in folgenden Münzen ausgezahlt:");
 
             muenzeAusgeben(rückgabebetrag, "EURO");
+
         }
 
         System.out.println("\nVergessen Sie nicht, den Fahrschein\n" +
@@ -163,40 +160,39 @@ class Fahrkartenautomat {
     // und in der Methode wieder durch 100 teilen, aber das gibt fehlerhafte
     // Abweichungen, die nicht notwendig sind
     {
+        // ----- TODO:
         double rückgabebetrag = betrag;
         while (rückgabebetrag >= 2.0) // 2 EURO-Münzen
         {
-            System.out.println("2 " + einheit);
+            System.out.println(Muenzen.erstelleMuenzen(2));
             rückgabebetrag -= 2.0;
         }
         while (rückgabebetrag >= 1.0) // 1 EURO-Münzen
         {
-            System.out.println("1 " + einheit);
+            System.out.println(Muenzen.erstelleMuenzen(1));
             rückgabebetrag -= 1.0;
         }
         while (rückgabebetrag >= 0.5) // 50 CENT-Münzen
         {
-            System.out.println("0,50 " + einheit);
+            System.out.println(Muenzen.erstelleMuenzen(0.5));
             rückgabebetrag -= 0.5;
         }
         while (rückgabebetrag >= 0.2) // 20 CENT-Münzen
         {
-            System.out.println("0,20 " + einheit);
+            System.out.println(Muenzen.erstelleMuenzen(0.2));
             rückgabebetrag -= 0.2;
         }
         while (rückgabebetrag >= 0.1) // 10 CENT-Münzen
         {
-            System.out.println("0,10 " + einheit);
+            System.out.println(Muenzen.erstelleMuenzen(0.1));
             rückgabebetrag -= 0.1;
         }
         rückgabebetrag = Math.round(rückgabebetrag * 100.0) / 100.0;
 
         while (rückgabebetrag >= 0.05)// 5 CENT-Münzen
         {
-            System.out.println("0,05 " + einheit);
+            System.out.println(Muenzen.erstelleMuenzen(0.05));
             rückgabebetrag -= 0.05;
         }
     }
 }
-
-// Aufgabe A 2.5 in txt ausgelagert
