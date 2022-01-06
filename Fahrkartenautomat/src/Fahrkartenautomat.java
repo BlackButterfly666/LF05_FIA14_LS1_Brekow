@@ -73,6 +73,7 @@ class Fahrkartenautomat {
 
         while (!korrekt) {
             if (anzahlTickets >= 1 && anzahlTickets <= 10) {
+                Kasse.manageKasse(anzahlTickets, tastatur);
                 korrekt = !korrekt;
             } else {
                 System.out.println("Wählen Sie bitte eine Anzahl von 1 bis 10 Tickets aus.");
