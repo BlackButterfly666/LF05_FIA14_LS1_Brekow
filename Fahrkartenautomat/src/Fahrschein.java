@@ -38,23 +38,3 @@ public class Fahrschein {
         return fahrkartenpreise[index];
     }
 }
-
-// static String fahrkartenBezeichnungAusgeben(int index) {
-// String[] fahrkartenbezeichnung = { "Einzelfahrschein Berlin AB",
-// "Einzelfahrschein Berlin BC",
-// "Einzelfahrschein Berlin ABC",
-// "Kurzstrecke",
-// "Tageskarte Berlin AB",
-// "Tageskarte Berlin BC",
-// "Tageskarte Berlin ABC",
-// "Kleingruppen-Tageskarte Berlin AB",
-// "Kleingruppen-Tageskarte Berlin BC",
-// "Kleingruppen-Tageskarte Berlin ABC" };
-// return fahrkartenbezeichnung[index];
-// }
-
-// static double fahrkartenPreiseAusgeben(int index) {
-// double[] fahrkartenpreise = { 2.90, 3.30, 3.60, 1.90, 8.60, 9.00, 9.60,
-// 23.50, 24.30, 24.90 };
-// return fahrkartenpreise[index];
-// }
