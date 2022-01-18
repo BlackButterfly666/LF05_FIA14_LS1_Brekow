@@ -32,5 +32,6 @@ public class Aufgabe8 {
             spalte++;
             reihe = 0;
         }
+        tastatur.close();
     }
 }
