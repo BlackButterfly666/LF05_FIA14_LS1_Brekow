@@ -9,6 +9,7 @@ public class Aufgabe3 {
         for (int i = palindrom.length -1; i >= 0; i--) {
             System.out.print(palindrom[i]);
         }
+        tastatur.close();
     }
 }
 // Aufgabe 3
