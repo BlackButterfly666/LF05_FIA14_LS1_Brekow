@@ -4,9 +4,9 @@ public class App {
         // int zahlen[] = { 1, 2, 3, 4, 5, 6, 7 };
         // System.out.println(ArrayHelper.convertArrayToString(zahlen));
 
-        // Aufgabe 2
-        int zahlenArr[] = { 1, 2, 3, 4, 5, 6 };
-        Aufgabe2.aufgabe2(zahlenArr);
-
+        // // Aufgabe 2
+        // int zahlenArr[] = { 1, 2, 3, 4, 5, 6 };
+        // Aufgabe2.aufgabe2(zahlenArr);
+        Aufgabe3.aufgabe3();
     }
 }
